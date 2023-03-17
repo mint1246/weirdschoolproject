@@ -1,0 +1,82 @@
+/* CSS code for horizontal nav bar */
+ul.navbar-nav {
+  margin: 0;
+  padding: 0;
+}
+nav.navbar {
+  margin-bottom: 0;
+}
+.nav-link {
+  line-height: 1;
+}
+
+button.navbar-toggler {
+  padding: 0;
+  margin: 0;
+}   
+.navbar-toggler-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.navbar-toggler-icon:hover {
+  transform: rotate(90deg);
+  transition: transform 0.3s ease-in-out;
+}
+
+.navbar {
+  background-color: transparent;
+}
+.custom-nav {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.custom-nav a {
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+}
+
+/* CSS code for vertical nav bar */
+@media (max-width: 600px) {
+  .custom-nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .custom-nav a {
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid gray;
+  }
+}
+
+h1 {
+  font-size: 5vw; /* font size will be equal to 10% of viewport width */
+}
+
+/* CSS code for images */
+img {
+  height:auto; /* preserve aspect ratio */
+  max-height :50vh; /* image height will not exceed half of viewport height */
+}
+/* CSS code for smaller devices */
+@media (max-width: 600px) {
+   .custom-nav {
+    flex-direction: row;
+   align-items: flex-start;
+   }
+   img {
+     max-width :250px; /* image width will not exceed 300px */
+   }
+}
+@media (max-width: 450px) {
+   .custom-nav {
+    flex-direction: row;
+   align-items: flex-start;
+   }
+   img {
+     max-width :200px; /* image width will not exceed 300px */
+   }
+}
