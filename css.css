@@ -1,4 +1,14 @@
 /* CSS code for horizontal nav bar */
+    ul.images {
+        margin: 0;
+        padding: 0;
+    }
+    ul.images li {
+        display: inline-block;
+    }
+    #textmenu {
+    text-align:center;
+}
 ul.navbar-nav {
   margin: 0;
   padding: 0;
@@ -79,4 +89,13 @@ img {
    img {
      max-width :200px; /* image width will not exceed 300px */
    }
+}
+div.item {
+    white-space: nowrap;
+    vertical-align: top;
+    text-align: center;
+    width: 120px;
+}
+.caption {
+    display: block;
 }
