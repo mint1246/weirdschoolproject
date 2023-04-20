@@ -25,6 +25,15 @@
     formData.append("input", file);
     // run a model and await the result
     const model = "nightmareai/real-esrgan";
+    // create a FormData object to send the file
+    const formData2 = new FormData();
+    formData2.append("input", file);
+
+    // add the input image scale setting
+    formData2.append("input_image_scale", 2);
+
+    // add the face enhance setting
+    formData2.append("face_enhance", true);
     // make a POST request to the Replicate API
     fetch(`https://cors-anywhere.herokuapp.com/https://api.replicate.com/v1/models/${model}/run`, {
   method: "POST",
