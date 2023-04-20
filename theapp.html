@@ -1,6 +1,7 @@
 <!-- This is the HTML part -->
 <!-- This is where the output image will be shown -->
 <img id="output-image">
+<script type="text/javascript" src="cors-proxy.js"></script>
 
 <!-- This is where the file input element will be shown -->
 <input type="file" id="picture-picker" accept="image/*">
@@ -18,6 +19,7 @@
 <script type="module">
 // Import Replicate from replicate-js module
 // Specify the path to the module
+
 import Replicate from 'https://cdn.jsdelivr.net/gh/nicholascelestin/replicate-js/replicate.js'
 const replicate = new Replicate({proxyUrl: 'http://localhost:3000/api'}, {token: '9876b5f71cafb8fa758cafb8895d6e4d3d69ca80'});
 
