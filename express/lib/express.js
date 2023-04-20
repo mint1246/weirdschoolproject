@@ -14,9 +14,6 @@
 /**
  * Expose `createApplication()`.
  */
-
-exports = module.exports = createApplication;
-
 /**
  * Create an express application.
  *
