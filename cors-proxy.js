@@ -1,5 +1,6 @@
 import express from './express/lib/express.js'
-import  {createProxyMiddleware}  from './http-proxy-middleware/dist/http-proxy-middleware.js';
+const { createProxyMiddleware } = require('./http-proxy-middleware/dist/http-proxy-middleware.js');
+
 
 // Configuration
 const REPLICATE_TOKEN = process.env.REPLICATE_API_TOKEN;
