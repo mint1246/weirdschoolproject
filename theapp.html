@@ -35,6 +35,26 @@
   },
   body: formData
 })
+.then(response => {
+  // check if the response is ok
+  if (response.ok) {
+    // return the response as a blob
+    return response.blob();
+  } else {
+    // throw an error with the status text
+    throw new Error(response.statusText);
+  }
+})
+.then(blob => {
+  // create a URL for the blob
+  const url = URL.createObjectURL(blob);
+  // set the image source to the URL
+  outputImage.src = url;
+})
+.catch(error => {
+  // log the error to the console
+  console.error(error);
+});
     }).then(response => response.json()).then(data => {
       // data is an object with an output property
       // set the image source to the output URL
