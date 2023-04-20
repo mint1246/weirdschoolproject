@@ -11,16 +11,6 @@
 /**
  * Module dependencies.
  */
-
-var bodyParser = require('body-parser')
-var EventEmitter = require('events').EventEmitter;
-var mixin = require('merge-descriptors');
-var proto = require('./application');
-var Route = require('./router/route');
-var Router = require('./router');
-var req = require('./request');
-var res = require('./response');
-
 /**
  * Expose `createApplication()`.
  */
@@ -75,12 +65,6 @@ exports.Router = Router;
  * Expose middleware
  */
 
-exports.json = bodyParser.json
-exports.query = require('./middleware/query');
-exports.raw = bodyParser.raw
-exports.static = require('serve-static');
-exports.text = bodyParser.text
-exports.urlencoded = bodyParser.urlencoded
 
 /**
  * Replace removed middleware with an appropriate error message.
