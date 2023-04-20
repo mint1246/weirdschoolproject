@@ -24,7 +24,7 @@
     const formData = new FormData();
     formData.append("input", file);
     // run a model and await the result
-    const model = "nightmareai/real-esrgan:42fed1c4974146d4d2414e2be2c5277c7fcf05fcc3a73abf41610695738c1d7b";
+    const model = "nightmareai/real-esrgan";
     // make a POST request to the Replicate API
     fetch(`https://cors-anywhere.herokuapp.com/https://api.replicate.com/v1/models/${model}/run`, {
       method: "POST",
