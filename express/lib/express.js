@@ -44,19 +44,7 @@ function createApplication() {
 }
 
 /**
- * Expose the prototypes.
- */
-
-exports.application = proto;
-exports.request = req;
-exports.response = res;
-
-/**
- * Expose constructors.
- */ 
-
-exports.Route = Route;
-exports.Router = Router;
+ * Expose the prot  
 
 /**
  * Expose middleware
