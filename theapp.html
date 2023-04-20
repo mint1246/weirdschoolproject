@@ -1,72 +1,69 @@
 <!-- This is the HTML part -->
-<form>
-  <label for="image-input">Select an image:</label>
-  <input type="file" id="image-input" name="image-input" accept=".png,.jpeg,.jpg,.gif,.bmp">
-  <input type="submit" id="submit-button" value="Submit">
-</form>
 <!-- This is where the output image will be shown -->
-<img id="output-image" alt="Output image">
-<!-- This is the JavaScript part -->
+<img id="output-image">
+
+<!-- This is where the file input element will be shown -->
+<input type="file" id="picture-picker" accept="image/*">
+
+<!-- This is where the number input element will be shown -->
+<input type="number" id="scale-input" min="1" max="10" value="4">
+
+<!-- This is where the checkbox input element will be shown -->
+<input type="checkbox" id="face-enhance-input" checked>
 <script>
-  // get your token from https://replicate.com/account
-  const token = "9876b5f71cafb8fa758cafb8895d6e4d3d69ca80";
-  // get the form element
-  const form = document.querySelector("form");
-  // get the image element
-  const outputImage = document.getElementById("output-image");
-  // add an event listener for when the user submits the form
-  form.addEventListener("submit", function(event) {
-    // prevent the default form submission behavior
-    event.preventDefault();
-    // get the selected file
-    const file = form.elements["image-input"].files[0];
-    // create a FormData object to send the file
-    const formData = new FormData();
-    formData.append("input", file);
-    // run a model and await the result
-    const model = "nightmareai/real-esrgan";
-    // create a FormData object to send the file
-    const formData2 = new FormData();
-    formData2.append("input", file);
+// This is the JavaScript part
+// Import Replicate from replicate-js module
+import Replicate from 'replicate-js'
 
-    // add the input image scale setting
-    formData2.append("input_image_scale", 2);
+// Create a new Replicate instance with your API token or a proxy URL
+const replicate = new Replicate({token: '9876b5f71cafb8fa758cafb8895d6e4d3d69ca80'})
 
-    // add the face enhance setting
-    formData2.append("face_enhance", true);
-    // make a POST request to the Replicate API
-    fetch(`https://cors-anywhere.herokuapp.com/https://api.replicate.com/v1/models/${model}/run`, {
-  method: "POST",
-  headers: {
-    "Authorization": `Bearer ${token}`,
-    "Content-Type": "multipart/form-data",
-    "x-requested-with": "XMLHttpRequest"
-  },
-  body: formData
+// Get the nightmare ai model from Replicate
+const nightmareModel = await replicate.models.get('nightmareai/real-esrgan')
+
+// Get the file input element by its id
+const picturePicker = document.getElementById('picture-picker')
+
+// Get the image element by its id
+const outputImage = document.getElementById('output-image')
+
+// Get the number input element by its id
+const scaleInput = document.getElementById('scale-input')
+
+// Get the checkbox input element by its id
+const faceEnhanceInput = document.getElementById('face-enhance-input')
+
+// Add an event listener to handle the change event when a file is selected
+picturePicker.addEventListener('change', async function() {
+  // Get the first file from the input element
+  const file = this.files[0]
+
+  // Create a new FileReader object to read the file as a data URL
+  const reader = new FileReader()
+
+  // Add an event listener to handle the load event when the file is read
+  reader.addEventListener('load', async function() {
+    // Get the data URL from the reader result
+    const dataURL = this.result
+
+    // Validate the scale input value and set it to 4 if it is invalid
+    let scale = parseInt(scaleInput.value)
+    if (isNaN(scale) || scale < 1 || scale > 10) {
+      scale = 4
+      scaleInput.value = 4
+    }
+
+    // Get the face enhance input checked state
+    let faceEnhance = faceEnhanceInput.checked
+
+    // Predict an image using the model with some parameters
+    const nightmareImage = await nightmareModel.predict({image: dataURL, scale: scale, face_enhance: faceEnhance})
+
+    // Set the source attribute of the image element to the output image
+    outputImage.src = nightmareImage
+  })
+
+  // Read the file as a data URL
+  reader.readAsDataURL(file)
 })
-.then(response => {
-  // check if the response is ok
-  if (response.ok) {
-    // return the response as a blob
-    return response.blob();
-  } else {
-    // throw an error with the status text
-    throw new Error(response.statusText);
-  }
-})
-.then(blob => {
-  // create a URL for the blob
-  const url = URL.createObjectURL(blob);
-  // set the image source to the URL
-  outputImage.src = url;
-})
-.catch(error => {
-  // log the error to the console
-  console.error(error);
-});
-    }).then(response => response.json()).then(data => {
-      // data is an object with an output property
-      // set the image source to the output URL
-      outputImage.src = data.output[0];
-    });
 </script>
