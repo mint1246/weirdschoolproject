@@ -27,15 +27,14 @@
     const model = "nightmareai/real-esrgan";
     // make a POST request to the Replicate API
     fetch(`https://cors-anywhere.herokuapp.com/https://api.replicate.com/v1/models/${model}/run`, {
-        method: "POST",
-        headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-            "Origin": "https://mint1246.github.io"
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${token}`,
+    "Content-Type": "multipart/form-data",
+    "x-requested-with": "XMLHttpRequest"
   },
-      body: formData
+  body: formData
 })
-      body: formData
     }).then(response => response.json()).then(data => {
       // data is an object with an output property
       // set the image source to the output URL
