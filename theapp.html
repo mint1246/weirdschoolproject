@@ -29,8 +29,8 @@
     fetch(`https://cors-anywhere.herokuapp.com/https://api.replicate.com/v1/models/${model}/run`, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${token}`
-        `Content-Type": "multipart/form-data`
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": `multipart/form-data`
       },
       body: formData
     }).then(response => response.json()).then(data => {
