@@ -10,8 +10,10 @@
 
 <!-- This is where the checkbox input element will be shown -->
 <input type="checkbox" id="face-enhance-input" checked>
-<script>
-// This is the JavaScript part
+
+<!-- This is where the submit button will be shown -->
+<button id="submit-button">Submit</button>
+<script type="module">
 // Import Replicate from replicate-js module
 import Replicate from 'replicate-js'
 
@@ -33,37 +35,49 @@ const scaleInput = document.getElementById('scale-input')
 // Get the checkbox input element by its id
 const faceEnhanceInput = document.getElementById('face-enhance-input')
 
+// Get the submit button by its id
+const submitButton = document.getElementById('submit-button')
+
+// Declare a variable to store the selected file
+let selectedFile = null
+
 // Add an event listener to handle the change event when a file is selected
-picturePicker.addEventListener('change', async function() {
-  // Get the first file from the input element
-  const file = this.files[0]
+picturePicker.addEventListener('change', function() {
+  // Get the first file from the input element and store it in the variable
+  selectedFile = this.files[0]
+})
 
-  // Create a new FileReader object to read the file as a data URL
-  const reader = new FileReader()
+// Add an event listener to handle the click event when the submit button is clicked
+submitButton.addEventListener('click', async function() {
+  // Check if there is a selected file
+  if (selectedFile) {
+    // Create a new FileReader object to read the file as a data URL
+    const reader = new FileReader()
 
-  // Add an event listener to handle the load event when the file is read
-  reader.addEventListener('load', async function() {
-    // Get the data URL from the reader result
-    const dataURL = this.result
+    // Add an event listener to handle the load event when the file is read
+    reader.addEventListener('load', async function() {
+      // Get the data URL from the reader result
+      const dataURL = this.result
 
-    // Validate the scale input value and set it to 4 if it is invalid
-    let scale = parseInt(scaleInput.value)
-    if (isNaN(scale) || scale < 1 || scale > 10) {
-      scale = 4
-      scaleInput.value = 4
-    }
+      // Validate the scale input value and set it to 4 if it is invalid
+      let scale = parseInt(scaleInput.value)
+      if (isNaN(scale) || scale < 1 || scale > 10) {
+        scale = 4
+        scaleInput.value = 4
+      }
 
-    // Get the face enhance input checked state
-    let faceEnhance = faceEnhanceInput.checked
+      // Get the face enhance input checked state
+      let faceEnhance = faceEnhanceInput.checked
 
-    // Predict an image using the model with some parameters
-    const nightmareImage = await nightmareModel.predict({image: dataURL, scale: scale, face_enhance: faceEnhance})
+      // Predict an image using the model with some parameters
+      const nightmareImage = await nightmareModel.predict({image: dataURL, scale: scale, face_enhance: faceEnhance})
 
-    // Set the source attribute of the image element to the output image
-    outputImage.src = nightmareImage
-  })
+      // Set the source attribute of the image element to the output image
+      outputImage.src = nightmareImage
+    })
 
-  // Read the file as a data URL
-  reader.readAsDataURL(file)
+    // Read the file as a data URL
+    reader.readAsDataURL(selectedFile)
+  }
 })
 </script>
