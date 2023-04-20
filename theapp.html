@@ -1,0 +1,41 @@
+<!-- This is the HTML part -->
+<form>
+  <label for="image-input">Select an image:</label>
+  <input type="file" id="image-input" name="image-input" accept=".png,.jpeg,.jpg,.gif,.bmp">
+  <input type="submit" id="submit-button" value="Submit">
+</form>
+<!-- This is where the output image will be shown -->
+<img id="output-image" alt="Output image">
+<!-- This is the JavaScript part -->
+<script>
+  // get your token from https://replicate.com/account
+  const token = "9876b5f71cafb8fa758cafb8895d6e4d3d69ca80";
+  // get the form element
+  const form = document.querySelector("form");
+  // get the image element
+  const outputImage = document.getElementById("output-image");
+  // add an event listener for when the user submits the form
+  form.addEventListener("submit", function(event) {
+    // prevent the default form submission behavior
+    event.preventDefault();
+    // get the selected file
+    const file = form.elements["image-input"].files[0];
+    // create a FormData object to send the file
+    const formData = new FormData();
+    formData.append("input", file);
+    // run a model and await the result
+    const model = "nightmareai/real-esrgan:42fed1c4974146d4d2414e2be2c5277c7fcf05fcc3a73abf41610695738c1d7b";
+    // make a POST request to the Replicate API
+    fetch(`https://api.replicate.com/v1/models/${model}/run`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      },
+      body: formData
+    }).then(response => response.json()).then(data => {
+      // data is an object with an output property
+      // set the image source to the output URL
+      outputImage.src = data.output[0];
+    });
+  });
+</script>
