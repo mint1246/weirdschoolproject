@@ -19,10 +19,8 @@
 // Import Replicate from replicate-js module
 // Specify the path to the module
 import Replicate from 'https://cdn.jsdelivr.net/gh/nicholascelestin/replicate-js/replicate.js'
+const replicate = new Replicate({proxyUrl: 'http://localhost:3000/api'}, {token: '9876b5f71cafb8fa758cafb8895d6e4d3d69ca80'});
 
-// Create a new Replicate instance with your API token or a proxy URL
-// Add a proxy option using cors-anywhere
-const replicate = new Replicate({token: '9876b5f71cafb8fa758cafb8895d6e4d3d69ca80', proxy: 'https://cors-anywhere.herokuapp.com/'})
 
 // Get the nightmare ai model from Replicate
 const nightmareModel = await replicate.models.get('nightmareai/real-esrgan')
