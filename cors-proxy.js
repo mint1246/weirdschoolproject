@@ -1,4 +1,4 @@
-import { express } from './express/lib/express.js'
+import express from './express/lib/express.js'
 const { createProxyMiddleware } = require('./http-proxy-middleware/dist/http-proxy-middleware.js');
 
 
